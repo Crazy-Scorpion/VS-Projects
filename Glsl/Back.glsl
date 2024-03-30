@@ -9,10 +9,10 @@ float sdOctogon( in vec2 p, in float r )
 }
 
 vec3 palette(float t){
-    vec3 a = vec3(0.548, 0.298, 0.368);
-    vec3 b = vec3(0.160, 0.160, 0.160);
-    vec3 c = vec3(3., 3., 3.);
-    vec3 d = vec3(1.877, 1.902, 0.407);
+    vec3 a = vec3(0.388, 0.388, 0.388);
+    vec3 b = vec3(0.258, 0.258, 0.258);
+    vec3 c = vec3(3.030, 3.030, 3.030);
+    vec3 d = vec3(1.557, 1.727, 0.895);
 
     return a + b * cos(6.28318*(c*t + d));
 }
@@ -29,9 +29,9 @@ void mainImage(out vec4 fragColor,in vec2 fragCoord){
 
     float o = sdOctogon(uv, 1.7);
 
-    vec3 col = palette(o);
+    vec3 col = palette(o + iTime/8.);
 
-    o = sin(o*sinM - iTime*3.)/sinD;
+    o = sin(o*sinM - iTime*1.5)/sinD;
 
     o = sinM / (o * 2300.0);
 
