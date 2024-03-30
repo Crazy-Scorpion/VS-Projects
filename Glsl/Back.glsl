@@ -26,21 +26,29 @@ void mainImage(out vec4 fragColor,in vec2 fragCoord){
     // vec2 uv = fragCoord/iR.xy * 2.0 - 1.0;
     // uv.x = uv.x * iR.x / iR.y;
     vec2 uv = (2.0 * fragCoord - iR.xy)/iR.y;
+    vec2 uv0 = (2.0 * fragCoord - iR.xy)/iR.y;
+    vec3 finalColor = vec3(0.0);
+
+    uv = fract(2. * uv) - 0.5;
+
 
     float o = sdOctogon(uv, 1.7);
+    float o0 = sdOctogon(uv0, 1.7);
 
-    vec3 col = palette(o + iTime/8.);
+    vec3 col = palette(o0 + iTime/8.);
 
     o = sin(o*sinM - iTime*1.5)/sinD;
 
-    o = sinM / (o * 2300.0);
+    o = sinM / (o * 2100.0);
 
     o = abs(o);
-    o = smoothstep(0.0, 0.1, o);
 
-    col *= o;
+    //editing edge1 is some special sauce
+    o = smoothstep(0.0, 0.15, o);
 
-    fragColor = vec4(col , 1.0);
+    finalColor = col * o;
+
+    fragColor = vec4(finalColor , 1.0);
 
 
     
